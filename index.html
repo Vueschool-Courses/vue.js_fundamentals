@@ -5,6 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>shopping List</title>
     </head>
+    <style>
+        .strikeout {
+            text-decoration: line-through;
+        }
+    </style>
     <body>
         <div id="shopping-list">
 
@@ -18,7 +23,7 @@
                 <button @click="saveItem" :disabled="newItem.length === 0">Save Item</button>
             </div>
             <ul>
-                <li v-for="item in items">{{ item }}</li>
+                <li v-for="item in items" :class="{strikeout: item.purchased}" @click="togglePurchased(item)">{{ item.label }}</li>
             </ul>
             <p v-if="items.length === 0">Nice job! You've bougth all your items</p>
         </div>
@@ -28,20 +33,33 @@
                 el: '#shopping-list',
                 data: {
                     state: 'default',
-                    header: "Shopping List App",
+                    header: 'Shopping List App',
                     newItem: "",
-                    items: [/*'10 Limones', '2 Peras', '4 Banano'*/
+                    items: [
+                        {
+                            label: '2 Papas',
+                            purchased: false
+                        }, {
+                            label: '5 Limones',
+                            purchased: true
+                        }, {
+                            label: '4 Peras',
+                            purchased: false
+                        }
                     ]
                 },
                 methods: {
                     saveItem: function () {
-                        this.items.push(this.newItem);
+                        this.items.push({label: this.newItem, purchased: false});
                         this.newItem = '';
 
                     },
                     changeState: function (newState) {
                         this.state = newState;
                         this.newItem = '';
+                    },
+                    togglePurchased: function (item) {
+                        item.purchased = ! item.purchased
                     }
                 }
             })
