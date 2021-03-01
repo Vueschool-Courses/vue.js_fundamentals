@@ -8,13 +8,19 @@
     <body>
         <div id="shopping-list">
             {{ header.toLocaleUpperCase() }}
+            <input v-model="newItem" type="text" placeholder="Add an intem">
+            <ul>
+                <li v-for="item in items">{{ item }}</li>
+            </ul>
         </div>
         <script src="https://unpkg.com/vue"></script>
         <script>
-            var vueinstance = new Vue({
+            var shopping = new Vue({
                 el: '#shopping-list',
                 data: {
-                    header: "Shopping List App"
+                    header: "Shopping List App",
+                    newItem: "",
+                    items: ['10 Limones', '2 Peras', '4 Banano']
                 }
             })
         </script>
